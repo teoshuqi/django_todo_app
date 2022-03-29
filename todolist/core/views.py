@@ -5,16 +5,18 @@ from django.urls import reverse
 from .models import toDo
 from .forms import ItemForm
 
+
 def createContext():
     context = {}
     form = ItemForm()
     context['form'] = form
     return context
 
+
 # Create your views here.
 def index(request):
     context = createContext()
-    list_todo = toDo.objects.filter(status=False)
+    list_todo = toDo.objects.filter(status=False).order_by('duedate', 'priority')
     context['list_todo'] = list_todo
     return render(request, "core/base.html", context)
 
